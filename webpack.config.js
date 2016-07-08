@@ -28,11 +28,6 @@ module.exports = {
       './app/api'
     ],
     alias: {
-      Main: 'app/components/Main.jsx',
-      Login: 'app/components/Login.jsx',
-      Clients: 'app/components/Clients.jsx',
-      Orders: 'app/components/Orders.jsx',
-      Navigation: 'app/components/Navigation.jsx',
       app: 'app',
       applicationStyles: 'app/styles/app.scss'
     },

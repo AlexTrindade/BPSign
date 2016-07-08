@@ -94,9 +94,13 @@
 
 	/* WEBPACK VAR INJECTION */(function($) {'use strict';
 
-	var _index = __webpack_require__(8);
+	var _firebase = __webpack_require__(8);
 
-	var _index2 = _interopRequireDefault(_index);
+	var _firebase2 = _interopRequireDefault(_firebase);
+
+	var _router = __webpack_require__(240);
+
+	var _router2 = _interopRequireDefault(_router);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -111,18 +115,13 @@
 	var hashHistory = _require.hashHistory;
 
 
-	var Main = __webpack_require__(231);
-	var Login = __webpack_require__(233);
-	var Clients = __webpack_require__(234);
-	var Orders = __webpack_require__(235);
-
 	// Load foundation
 	$(document).foundation();
 
 	// App css
 	__webpack_require__(236);
 
-	_index2.default.auth().onAuthStateChanged(function (user) {
+	_firebase2.default.auth().onAuthStateChanged(function (user) {
 	  if (user) {
 	    hashHistory.push("/clients");
 	  } else {
@@ -132,15 +131,9 @@
 	});
 
 	ReactDOM.render(React.createElement(
-	  Router,
-	  { history: hashHistory },
-	  React.createElement(
-	    Route,
-	    { path: '/', component: Main },
-	    React.createElement(Route, { path: '/orders', component: Orders }),
-	    React.createElement(Route, { path: '/clients', component: Clients }),
-	    React.createElement(IndexRoute, { component: Login })
-	  )
+	  'div',
+	  null,
+	  _router2.default
 	), document.getElementById('app'));
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(7)))
 
@@ -26081,9 +26074,9 @@
 	});
 	exports.Login = undefined;
 
-	var _index = __webpack_require__(8);
+	var _firebase = __webpack_require__(8);
 
-	var _index2 = _interopRequireDefault(_index);
+	var _firebase2 = _interopRequireDefault(_firebase);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -26100,7 +26093,7 @@
 	    e.preventDefault();
 	    var email = this.refs.email.value;
 	    var pass = this.refs.pass.value;
-	    _index2.default.auth().signInWithEmailAndPassword(email, pass).then(function (result) {
+	    _firebase2.default.auth().signInWithEmailAndPassword(email, pass).then(function (result) {
 	      console.log('Auth worked!', result);
 	    }, function (error) {
 	      console.log('Unable to auth', error);
@@ -26545,6 +26538,59 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
+
+/***/ },
+/* 240 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _react = __webpack_require__(11);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _reactRouter = __webpack_require__(169);
+
+	var _firebase = __webpack_require__(8);
+
+	var _firebase2 = _interopRequireDefault(_firebase);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var Main = __webpack_require__(231);
+	var Login = __webpack_require__(233);
+	var Clients = __webpack_require__(234);
+	var Orders = __webpack_require__(235);
+
+	var requireLogin = function requireLogin(nextState, replace, next) {
+	  if (!_firebase2.default.auth().currentUser) {
+	    replace('/');
+	  }
+	  next();
+	};
+
+	var redirectIfLoggedIn = function redirectIfLoggedIn(nextState, replace, next) {
+	  if (_firebase2.default.auth().currentUser) {
+	    replace('/clients');
+	  }
+	  next();
+	};
+
+	exports.default = _react2.default.createElement(
+	  _reactRouter.Router,
+	  { history: _reactRouter.hashHistory },
+	  _react2.default.createElement(
+	    _reactRouter.Route,
+	    { path: '/', component: Main },
+	    _react2.default.createElement(_reactRouter.Route, { path: '/orders', component: Orders, onEnter: requireLogin }),
+	    _react2.default.createElement(_reactRouter.Route, { path: '/clients', component: Clients, onEnter: requireLogin }),
+	    _react2.default.createElement(_reactRouter.IndexRoute, { component: Login, onEnter: redirectIfLoggedIn })
+	  )
+	);
 
 /***/ }
 /******/ ]);

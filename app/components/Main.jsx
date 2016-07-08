@@ -1,5 +1,5 @@
 var React = require('react');
-var Navigation = require('Navigation');
+var Navigation = require('app/components/Navigation');
 
 var Main = (props) => {
   function isLoginPage() {

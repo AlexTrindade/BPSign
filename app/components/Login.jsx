@@ -1,5 +1,5 @@
 var React = require('react');
-import firebase from '../firebase/index.js';
+import firebase from 'app/firebase';
 
 
 export var Login = React.createClass({
