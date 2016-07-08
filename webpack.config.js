@@ -22,7 +22,18 @@ module.exports = {
   },
   resolve: {
     root: __dirname,
+    modulesDirectories: [
+      'node_modules',
+      './app/components',
+      './app/api'
+    ],
     alias: {
+      Main: 'app/components/Main.jsx',
+      Login: 'app/components/Login.jsx',
+      Clients: 'app/components/Clients.jsx',
+      Orders: 'app/components/Orders.jsx',
+      Navigation: 'app/components/Navigation.jsx',
+      app: 'app',
       applicationStyles: 'app/styles/app.scss'
     },
     extensions: ['', '.js', '.jsx']
@@ -43,6 +54,5 @@ module.exports = {
     includePaths: [
       path.resolve(__dirname, './node_modules/foundation-sites/scss')
     ]
-  },
-  devtool: 'cheap-module-eval-source-map'
+  }
 };
